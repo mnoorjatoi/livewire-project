@@ -7,28 +7,51 @@
           <p class="lead text-muted">Are you sick of short tweets and impersonal &ldquo;shared&rdquo; posts that are reminiscent of the late 90&rsquo;s email forwards? We believe getting back to actually writing is the key to enjoying the internet again.</p>
         </div>
         <div class="col-lg-5 pl-lg-5 pb-3 py-lg-5">
-          <form action="#" method="POST" id="registration-form">
+          <form action="/register" method="POST" id="registration-form">
+            @csrf
             <div class="form-group">
               <label for="username-register" class="text-muted mb-1"><small>Username</small></label>
-              <input name="username" id="username-register" class="form-control" type="text" placeholder="Pick a username" autocomplete="off" />
+              <input name="username" id="username-register"value="{{ old('username') }}" class="form-control" type="text" placeholder="Pick a username" autocomplete="off" />
+              @error('username')
+                <small class="text-danger"> {{ $message }} </small>
+              @enderror
             </div>
 
             <div class="form-group">
               <label for="email-register" class="text-muted mb-1"><small>Email</small></label>
               <input name="email" id="email-register" class="form-control" type="text" placeholder="you@example.com" autocomplete="off" />
+              @error('email')
+              <small class="text-danger"> {{ $message }} </small>
+              @enderror
             </div>
 
             <div class="form-group">
               <label for="password-register" class="text-muted mb-1"><small>Password</small></label>
               <input name="password" id="password-register" class="form-control" type="password" placeholder="Create a password" />
+                @error('password')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
             <div class="form-group">
               <label for="password-register-confirm" class="text-muted mb-1"><small>Confirm Password</small></label>
-              <input name="password" id="password-register-confirm" class="form-control" type="password" placeholder="Confirm password" />
+              <input name="password_confirmation" id="password-register-confirm" class="form-control" type="password" placeholder="Confirm password" />
+              @error('password_confirmation')
+                <small class="text-danger"> {{ $message }}</small>
+              @enderror
             </div>
 
             <button type="submit" class="py-3 mt-4 btn btn-lg btn-success btn-block">Sign up for OurApp</button>
+            @if(session('success'))
+            <div class="alert alert-success mt-2" id="successMessage">
+                {{ session('success') }}
+            </div>
+            <script>
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 4000); // 4 seconds
+            </script>
+            @endif
           </form>
         </div>
       </div>
