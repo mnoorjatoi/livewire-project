@@ -42,16 +42,6 @@
             </div>
 
             <button type="submit" class="py-3 mt-4 btn btn-lg btn-success btn-block">Sign up for OurApp</button>
-            @if(session('success'))
-            <div class="alert alert-success mt-2" id="successMessage">
-                {{ session('success') }}
-            </div>
-            <script>
-                setTimeout(() => {
-                    document.getElementById('successMessage').style.display = 'none';
-                }, 4000); // 4 seconds
-            </script>
-            @endif
           </form>
         </div>
       </div>
