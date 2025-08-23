@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [UserController::class,"homecontent"])->name('login');
 Route::post('/register',[UserController::class, "register"]);
 Route::post('/login',[UserController::class, "login"]);
-Route::post('/logout',[UserController::class, "logout"]);
+Route::post('/logout',[UserController::class, "logout"])->middleware('mustbelogin');
 
 // Blog Related Routes
 Route::get('/create-post', [PostController::class,'ShowPostForm'])->name('create-post')->middleware('mustbelogin');
 Route::post('/create-post', [PostController::class,'SaveNewPost'])->middleware('mustbelogin');
 Route::get('/post/{post}', [PostController::class,'viewSinglePost'])->name('view-post')->middleware('mustbelogin');
+
+// Profile related rouutes
+Route::get('/profile/{user:username}', [ProfileController::class,'ProfilePost']);
 
 
