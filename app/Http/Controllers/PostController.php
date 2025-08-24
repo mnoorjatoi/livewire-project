@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
 
+    public function deletePost(Post $post){
+        $post->delete();
+        return redirect()->route('user-post-profile', username_lower(auth()->user()->username));
+    }
+
     public function viewSinglePost(Post $post){
         $post['body'] = strip_tags(Str::markdown($post->body), '<p><h1><h2><ul><ol><b><strong>');
         return view('single-post', ['post' => $post]);
