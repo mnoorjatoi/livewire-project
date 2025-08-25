@@ -26,7 +26,9 @@ Route::post('/logout',[UserController::class, "logout"])->middleware('mustbelogi
 Route::get('/create-post', [PostController::class,'ShowPostForm'])->name('create-post')->middleware('mustbelogin');
 Route::post('/create-post', [PostController::class,'SaveNewPost'])->middleware('mustbelogin');
 Route::get('/post/{post}', [PostController::class,'viewSinglePost'])->name('view-post')->middleware('mustbelogin');
-Route::delete('/post/{post}', [PostController::class,'deletePost'])->name('delete-post');
+Route::delete('/post/{post}', [PostController::class,'deletePost'])->name('delete-post')->middleware('can:delete,post');
+Route::get('/post/{post}/edit', [PostController::class,'editSinglePost'])->name('edit-post')->middleware('can:update,post');
+Route::put('/post/{post}', [PostController::class,'updatePost'])->name('update-post')->middleware('can:update,post');
 
 
 // Profile related rouutes

@@ -9,6 +9,25 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
 
+
+    public function updatePost(Post $post, Request $req){
+        $fields = $req->validate(
+            [
+                'title' => 'required',
+                'body' => 'required'
+            ]
+        );
+        $fields['title'] = strip_tags($fields['title']);
+        $fields['body'] = strip_tags($fields['body']);
+        $post->update($fields);
+        return back()->with('success','post successfully updated');
+
+    }
+
+    public function editSinglePost(Post $post){
+        return view('edit-post',['post' => $post]);
+    }
+
     public function deletePost(Post $post){
         $post->delete();
         return redirect()->route('user-post-profile', username_lower(auth()->user()->username));
